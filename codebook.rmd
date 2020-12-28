@@ -45,13 +45,22 @@ FrequencyBodyAccelerometerJerkMagnitude
 FrequencyBodyGyroscopeMagnitude  
 FrequencyBodyGyroscopeJerkMagnitude  
 
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the Angle variable:
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the Angle variable on:
 
-gravityMean
-TimeBodyAccelerometerMean
-TimeBodyAccelerometerJerkMean
-TimeBodyGyroscopeMean
-TimeBodyGyroscopeJerkMean
+gravityMean  
+TimeBodyAccelerometerMean  
+TimeBodyAccelerometerJerkMean  
+TimeBodyGyroscopeMean  
+TimeBodyGyroscopeJerkMean  
+
+to obtain:  
+mean_Angle(TimeBodyAccelerometerMean,Gravity)   
+mean_Angle(TimeBodyAccelerometerJerkMean),GravityMean)   
+mean_Angle(TimeBodyGyroscopeMean,GravityMean)   
+mean_Angle(TimeBodyGyroscopeJerkMean,GravityMean) 
+mean_Angle(X,GravityMean)  
+mean_Angle(Y,GravityMean)  
+mean_Angle(Z,GravityMean)    
 
 The final set of variables that were selected from these signals are **Mean** and **Standard deviation (STD)** values. The complete list of variables of each feature vector is available in 'features.txt' 
 
