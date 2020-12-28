@@ -121,13 +121,14 @@ testdf <- cbind(test_subjects, test_label, test_set)
 
 #check the features of the merged testdf dataframe
 dim(testdf)
+head(testdf)[1:5,1:5]
 
 ## Merge the test and training sets by using rbind
 mergedf <- rbind(traindf, testdf)
 
 #check the features of the merged dataframe mergedf
 dim(mergedf)
-
+head(mergedf)[1:5,1:5]
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
 
@@ -140,7 +141,7 @@ meanstddf <- select(mergedf, 1:3, contains("mean"), contains("std"))
 #check the features of the new dataframe:
 str(meanstddf)
 dim(meanstddf)
-head(meanstddf)
+head(meanstddf)[1:5,1:5]
 
 # 3. Uses descriptive activity names to name the activities in the data set
 
@@ -183,7 +184,7 @@ names(meanstddf3) <- gsub("Acc", "Accelerometer",names(meanstddf3)) %>%
 #check the features of the new meanstddf3 dataframe:
 str(meanstddf3)
 dim(meanstddf3)
-
+head(meanstddf3)[1:5,1:5]
 # 5.From the data set in step 4, creates a second, independent tidy data set 
 # with the average of each variable for each activity and each subject.
 
@@ -195,6 +196,6 @@ mean_activity<- meanstddf3 %>%
         summarise(across(where(is.numeric), ~ mean(.x), .names = "mean_{.col}")) %>% 
         print
 
-# create the tidy data set as a csv file
-write.csv(meanstddf3, "mean_activity.csv")
+# create the tidy data set as a .txt file
+write.table(meanstddf3, "mean_activity.txt")
 View(mean_activity)
