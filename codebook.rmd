@@ -14,16 +14,15 @@ The task of the assignment is to create one R script called run_analysis.R that 
 # Data
 This project assignment uses data from: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-
 # Description of the data
 Data features collected from the smartphone accelerometer and gyroscope are the 3-axial raw signals tAccelerometer-XYZ and tGyroscope-XYZ. 
 
 # Units of data
-Data with prefix 't' are time domain signals, captured at a constant rate of 50 Hz, then filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. The acceleration signal was then separated into body and gravity acceleration signals (TimeBodyAccelerometer-XYZ and TimeGravityAccelerometer-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+Data with prefix 't' are **time** domain signals (converted to "Time"), captured at a constant rate of 50 Hz, then filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. The acceleration signal was then separated into body and gravity acceleration signals (TimeBodyAccelerometer-XYZ and TimeGravityAccelerometer-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
 The body linear acceleration and angular velocity were later derived in time to obtain Jerk signals (TimeBodyAccelerometerJerk-XYZ and TimeBodyGyroscopeJerk-XYZ). The magnitude of these 3-D signals were calculated using the Euclidean norm (TimeBodyAccelerometerMagnitude, TimeGravityAccelerometerMagnitude, TimeBodyAccelerometerJerkMagnitude, TimeBodyGyroscopeMagnitude, TimeBodyGyroscopeJerkMagnitude). 
 
-Data with prefix 'f' are frequency domain signals. A Fast Fourier Transform (FFT) was applied to some of these signals to get FrequencyBodyAccelerometer-XYZ, FrequencyBodyAccelerometerJerk-XYZ, FrequencyBodyGyroscope-XYZ, FrequencyBodyAccelerometerJerkMagnitude, FrequencyBodyGyroscopeMagnitude, and FrequencyBodyGyroscopeJerkMagnitude.
+Data with prefix 'f' are **frequency** domain signals (converted to "Frequency"). A Fast Fourier Transform (FFT) was applied to some of these signals to get FrequencyBodyAccelerometer-XYZ, FrequencyBodyAccelerometerJerk-XYZ, FrequencyBodyGyroscope-XYZ, FrequencyBodyAccelerometerJerkMagnitude, FrequencyBodyGyroscopeMagnitude, and FrequencyBodyGyroscopeJerkMagnitude.
 
 These signals were used to estimate variables of the feature vector for each pattern:  
 '-XYZ' is used to denote the 3-axial signals in the X, Y and Z directions.
@@ -215,10 +214,9 @@ names(meandf3) <- gsub("Acc", "Accelerometer",names(meandf3)) %>%
         str_replace_all("^t", "Time") %>% 
         str_replace_all("^f", "Frequency") %>% 
         str_replace_all("tBody", "TimeBody") %>%
-        str_replace_all("\\(","") %>%
-        str_replace_all("\\)","") %>%
         str_replace_all("\\-", "") %>%
-        str_replace_all("\\[Mm]ean", "Mean") %>% 
+        str_replace_all("\\(\\)", "") %>%
+        str_replace_all("[Mm]ean", "Mean") %>% 
         str_replace_all("std", "STD") %>% 
         str_replace_all("freq", "Frequency") %>% 
         str_replace_all("angle", "Angle") %>% 
@@ -229,7 +227,7 @@ names(meandf3) <- gsub("Acc", "Accelerometer",names(meandf3)) %>%
 Check the features of the new meanstddf3 dataframe:
 ```{r}
 dim(meandf3)
-head(meandf3)[,1:10]
+head(meandf3)[,1:5]
 ```
 
 # 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
@@ -244,7 +242,7 @@ mean_activity<- meandf3 %>%
         print
 ```
 
-Create the tidy data set as a csv file
+Create the tidy data set as a .txt file
 ```{r}
 write.table(mean_activity, "mean_activity.txt",row.name=FALSE)
 ```

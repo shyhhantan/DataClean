@@ -165,10 +165,9 @@ names(meandf3) <- gsub("Acc", "Accelerometer",names(meandf3)) %>%
         str_replace_all("^t", "Time") %>% 
         str_replace_all("^f", "Frequency") %>% 
         str_replace_all("tBody", "TimeBody") %>%
-        str_replace_all("\\(","") %>%
-        str_replace_all("\\)","") %>%
         str_replace_all("\\-", "") %>%
-        str_replace_all("\\[Mm]ean", "Mean") %>% 
+        str_replace_all("\\(\\)", "") %>%
+        str_replace_all("[Mm]ean", "Mean") %>% 
         str_replace_all("std", "STD") %>% 
         str_replace_all("freq", "Frequency") %>% 
         str_replace_all("angle", "Angle") %>% 
@@ -179,7 +178,7 @@ names(meandf3) <- gsub("Acc", "Accelerometer",names(meandf3)) %>%
 Check the features of the new meanstddf3 dataframe:
 ```{r}
 dim(meandf3)
-head(meandf3)[,1:10]
+head(meandf3)[,1:5]
 ```
 ``
 
@@ -195,7 +194,7 @@ mean_activity<- meandf3 %>%
         print
 ```
 
-Create the tidy data set as a csv file
+Create the tidy data set as a .txt file
 ```{r}
 write.table(mean_activity, "mean_activity.txt",row.name=FALSE)
 ```

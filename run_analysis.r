@@ -124,19 +124,21 @@ names(meandf3) <- gsub("Acc", "Accelerometer",names(meandf3)) %>%
         str_replace_all("^t", "Time") %>% 
         str_replace_all("^f", "Frequency") %>% 
         str_replace_all("tBody", "TimeBody") %>%
-        str_replace_all("\\(","") %>%
-        str_replace_all("\\)","") %>%
         str_replace_all("\\-", "") %>%
-        str_replace_all("\\[Mm]ean", "Mean") %>% 
+        str_replace_all("\\`", "") %>%
+        str_replace_all("\\(\\)", "") %>%
+        str_replace_all("[Mm]ean", "Mean") %>% 
         str_replace_all("std", "STD") %>% 
         str_replace_all("freq", "Frequency") %>% 
         str_replace_all("angle", "Angle") %>% 
         str_replace_all("gravity", "Gravity") %>%
         print
 
+
 #check the features of the new meandf3 dataframe:
 dim(meandf3)
-head(meandf3)[,1:10]
+str(meandf3)
+head(meandf3)[,1:5]
 
 # 5.From the data set in step 4, creates a second, independent tidy data set 
 # with the average of each variable for each activity and each subject.
