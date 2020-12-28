@@ -1,0 +1,20 @@
+---
+title: "README"
+author: "stan"
+date: "12/27/2020"
+output: html_document
+---
+
+# Peer-graded Assignment: Getting and Cleaning Data Course Project
+
+This repository contains the following files:
+
+ - This README.rmd file
+ - An R script called run_analysis.R
+ - A codebook.rmd file that describes the variables, the data, and any transformations and work performed to clean up the data.
+ - A mean_activity.csv file containing the tidy data set.
+ 
+ The link to the Github repository with the script for performing the analysis and the listed files are as follows: https://github.com/shyhhantan/DataClean
+ 
+The work submitted for this project is the work of the student who submitted it.
+
