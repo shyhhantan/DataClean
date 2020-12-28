@@ -197,8 +197,9 @@ mean_activity<- meanstddf3 %>%
         summarise(across(where(is.numeric), ~ mean(.x), .names = "mean_{.col}")) %>% 
         print
 
-str(meanstddf3)
+str(mean_activity)
+dim(mean_activity)
 
 # create the tidy data set as a .txt file
-write.table(meanstddf3, "mean_activity.txt",row.name=FALSE)
+write.table(mean_activity, "mean_activity.txt",row.name=FALSE)
 View(mean_activity)

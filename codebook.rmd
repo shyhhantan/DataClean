@@ -247,7 +247,7 @@ mean_activity<- meanstddf3 %>%
 
 Create the tidy data set as a csv file
 ```{r}
-write.table(meanstddf3, "mean_activity.txt",row.name=FALSE)
+write.table(mean_activity, "mean_activity.txt",row.name=FALSE)
 ```
 
 # Description of the variables
