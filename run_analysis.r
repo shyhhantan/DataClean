@@ -174,11 +174,13 @@ names(meanstddf3) <- gsub("Acc", "Accelerometer",names(meanstddf3)) %>%
         str_replace_all("Mag", "Magnitude") %>% 
         str_replace_all("^t", "Time") %>% 
         str_replace_all("^f", "Frequency") %>% 
-        str_replace_all("tBody", "TimeBody") %>% 
-        str_replace_all("-mean\\(\\)", "Mean") %>% 
-        str_replace_all("-std\\(\\)", "STD") %>% 
-        str_replace_all("-freq\\(\\)", "Frequency") %>% 
-        str_replace_all("\\(\\)","") %>% 
+        str_replace_all("tBody", "TimeBody") %>%
+        str_replace_all("\\(","") %>%
+        str_replace_all("\\)","") %>%
+        str_replace_all("\\-", "") %>%
+        str_replace_all("\\[Mm]ean", "Mean") %>% 
+        str_replace_all("std", "STD") %>% 
+        str_replace_all("freq", "Frequency") %>% 
         str_replace_all("angle", "Angle") %>% 
         str_replace_all("gravity", "Gravity") %>%
         print
