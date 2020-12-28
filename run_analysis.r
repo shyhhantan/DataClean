@@ -11,9 +11,12 @@
 # 4. Appropriately labels the data set with descriptive variable names. 
 # 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-# Downloading files, check where they are located, rename for use in R:
-
+## Downloading files
 # Check working directory
+# downloading files, 
+# check where they are located, 
+# rename for use in R:
+
 getwd()
 
 # download the zipped files, unzip them into R readable folders:
@@ -46,8 +49,6 @@ recursive_replace_lowercase()
 
 # Get a list of files & directories in the uci_har_dataset directory:
 list.files("./data/uci_har_dataset/")
-# [1] "activity_labels.txt" "features_info.txt"   "features.txt"        "readme.txt"         
-# [5] "test"                "train"    
 
 ## Read in the activity_labels.txt and features.txt" files.
 # Read the activity_labels.txt file as activity_labels and name the columns:
@@ -62,12 +63,9 @@ colnames(features, do.NULL = FALSE)
 colnames(features) <- c("feature_no","feature")
 str(features)
 
-# Read in the training set files and merge the files by using cbind
+## Read in the training set files and merge the files by using cbind
 # Get a list of files in the train directory:
 list.files("./data/uci_har_dataset/train")
-
-# [1] "inertial_signals"  "subject_train.txt" "x_train.txt"      
-# [4] "y_train.txt"      
 
 # Read in the subject_train.txt file as train_subjects and label the column name as "subject":
 train_subjects<- read.table("./data/uci_har_dataset/train/subject_train.txt")
@@ -93,14 +91,12 @@ str(train_set)
 traindf <- cbind(train_subjects,train_label,train_set)
 
 #check the features of the merged traindf dataframe
-head(traindf)
 dim(traindf)
-str(traindf)
 
 ## Read in the test set files and merge the files by using cbind
 # Get a list of files in the test directory:
 list.files("./data/uci_har_dataset/test")
-# [1] "inertial_signals" "subject_test.txt" "x_test.txt"       "y_test.txt"      
+  
 
 # Read in the subject_test.txt file as train_subjects and label the column name as "subject":
 test_subjects<- read.table("./data/uci_har_dataset/test/subject_test.txt")
@@ -119,24 +115,18 @@ test_set <- read.table("./data/uci_har_dataset/test/x_test.txt")
 test_set_colnames <- features[,2]
 colnames(test_set, do.NULL = FALSE)
 colnames(test_set) <- test_set_colnames
-str(test_set)
 
 # Merge the test_subjects, test_label and test_set data by using cbind:
 testdf <- cbind(test_subjects, test_label, test_set)
 
 #check the features of the merged testdf dataframe
-head(testdf)
 dim(testdf)
-str(testdf)
 
 ## Merge the test and training sets by using rbind
 mergedf <- rbind(traindf, testdf)
 
 #check the features of the merged dataframe mergedf
-head(mergedf)
 dim(mergedf)
-str(mergedf)
-
 
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
@@ -160,14 +150,13 @@ head(meanstddf)
 meanstddf2 <- left_join(meanstddf,activity_labels, "activity_label")
 
 #check the features of the new meanstddf2 dataframe:
-meanstddf2
-str(meanstddf2)
+head(meanstddf2)[5,5]
 dim(meanstddf2)
 
 # Replace "activity_label" with the "activity" column 
 # by moving it to the second column, assign dataframe to meanstddf3:
 meanstddf3 <- meanstddf2[c(1, 89, 3:88)]
-str(meanstddf3)
+head(meanstddf3)[5,5]
 dim(meanstddf3)
 
 # 4.Appropriately labels the data set with descriptive variable names.
@@ -206,6 +195,6 @@ mean_activity<- meanstddf3 %>%
         summarise(across(where(is.numeric), ~ mean(.x), .names = "mean_{.col}")) %>% 
         print
 
-# create the tidy data set
+# create the tidy data set as a csv file
 write.csv(meanstddf3, "mean_activity.csv")
 View(mean_activity)
