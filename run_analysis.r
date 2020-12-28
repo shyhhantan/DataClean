@@ -175,9 +175,10 @@ names(meanstddf3) <- gsub("Acc", "Accelerometer",names(meanstddf3)) %>%
         str_replace_all("^t", "Time") %>% 
         str_replace_all("^f", "Frequency") %>% 
         str_replace_all("tBody", "TimeBody") %>% 
-        str_replace_all("-mean()", "Mean") %>% 
+        str_replace_all("-mean\\(\\)", "Mean") %>% 
         str_replace_all("-std\\(\\)", "STD") %>% 
         str_replace_all("-freq\\(\\)", "Frequency") %>% 
+        str_replace_all("\\(\\)","") %>% 
         str_replace_all("angle", "Angle") %>% 
         str_replace_all("gravity", "Gravity") %>%
         print
@@ -196,6 +197,8 @@ mean_activity<- meanstddf3 %>%
         summarise(across(where(is.numeric), ~ mean(.x), .names = "mean_{.col}")) %>% 
         print
 
+str(meanstddf3)
+
 # create the tidy data set as a .txt file
-write.table(meanstddf3, "mean_activity.txt")
+write.table(meanstddf3, "mean_activity.txt",row.name=FALSE)
 View(mean_activity)

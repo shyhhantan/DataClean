@@ -12,12 +12,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This project assignment uses data downloaded from:https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-The task of the assignment is to create one R script called run_analysis.R that does the following:
-- 1. Merges the training and the test sets to create one data set.
-- 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
-- 3. Uses descriptive activity names to name the activities in the data set
-- 4. Appropriately labels the data set with descriptive variable names. 
-- 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+The task of the assignment is to create one R script called run_analysis.R that does the following:  
+- 1. Merges the training and the test sets to create one data set.  
+- 2. Extracts only the measurements on the mean and standard deviation for each measurement.   
+- 3. Uses descriptive activity names to name the activities in the data set.  
+- 4. Appropriately labels the data set with descriptive variable names.  
+- 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.  
 
 # Downloading the files
 
@@ -157,7 +157,7 @@ head(test_set)[1:5,1:5]
 Merge the test_subjects, test_label and test_set data by using cbind and check the features of the merged testdf dataframe.
 ```{r}
 testdf <- cbind(test_subjects, test_label, test_set)
-head(testdf)[1:5,1:5]
+head(testdf)[1:6,1:6]
 dim(testdf)
 ```
 
@@ -209,7 +209,7 @@ library(stringr)
 ```
 
 
-Replace the shortened words with actual words, t with Time, f and -freq() with Frequency, -mean() with Mean,and -std() with STD:
+Replace the shortened words in the variable names with actual words: BodyBody, with Body, Acc with Accelerometer, Gyro with Gyroscope, Mag with Magnitude, t with Time, f and -freq() with Frequency, tBody with TimeBody, angle with Angle, and gravity with Gravity, -mean() with Mean, and -std() with STD:
 ```{r}
 names(meanstddf3) <- gsub("Acc", "Accelerometer",names(meanstddf3)) %>% 
         str_replace_all("Gyro", "Gyroscope") %>% 
@@ -218,9 +218,10 @@ names(meanstddf3) <- gsub("Acc", "Accelerometer",names(meanstddf3)) %>%
         str_replace_all("^t", "Time") %>% 
         str_replace_all("^f", "Frequency") %>% 
         str_replace_all("tBody", "TimeBody") %>% 
-        str_replace_all("-mean()", "Mean") %>% 
+        str_replace_all("-mean\\(\\)", "Mean") %>% 
         str_replace_all("-std\\(\\)", "STD") %>% 
         str_replace_all("-freq\\(\\)", "Frequency") %>% 
+        str_replace_all("\\(\\)","") %>% 
         str_replace_all("angle", "Angle") %>% 
         str_replace_all("gravity", "Gravity") %>%
         print
@@ -249,4 +250,46 @@ Create the tidy data set as a csv file
 write.table(meanstddf3, "mean_activity.txt",row.name=FALSE)
 ```
 
+# Description of the variables
+
+As described in the features_info.txt file provided for the assignment, the features are from the accelerometer and gyroscope 3-axial raw signals tAccelerometer-XYZ and tGyroscope-XYZ. They are time domain signals (prefix 't' to denote time) captured at a constant rate of 50 Hz, then filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. The acceleration signal was then separated into body and gravity acceleration signals (TimeBodyAccelerometer-XYZ and TimeGravityAccelerometer-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+The body linear acceleration and angular velocity were later derived in time to obtain Jerk signals (TimeBodyAccelerometerJerk-XYZ and TimeBodyGyroscopeJerk-XYZ). The magnitude of these 3-D signals were calculated using the Euclidean norm (TimeBodyAccelerometerMagnitude, TimeGravityAccelerometerMagnitude, TimeBodyAccelerometerJerkMagnitude, TimeBodyGyroscopeMagnitude, TimeBodyGyroscopeJerkMagnitude). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals to get FrequencyBodyAccelerometer-XYZ, FrequencyBodyAccelerometerJerk-XYZ, FrequencyBodyGyroscope-XYZ, FrequencyBodyAccelerometerJerkMagnitude, FrequencyBodyGyroscopeMagnitude, FrequencyBodyGyroscopeJerkMagnitude. (Note: the 'f' indicates frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+TimeBodyAccelerometer-XYZ  
+TimeGravityAccelerometer-XYZ  
+TimeBodyAccelerometerJerk-XYZ  
+TimeBodyGyroscope-XYZ  
+TimeBodyGyroscopeJerk-XYZ  
+TimeBodyAccelerometerMagnitude  
+TimeGravityAccelerometerMagnitude  
+TimeBodyAccelerometerJerkMagnitude  
+TimeBodyGyroscopeMagnitude  
+TimeBodyGyroscopeJerkMagnitude  
+FrequencyBodyAccelerometer-XYZ  
+FrequencyBodyAccelerometerJerk-XYZ  
+FrequencyBodyGyroscope-XYZ  
+FrequencyBodyAccelerometerMagnitude  
+FrequencyBodyAccelerometerJerkMagnitude  
+FrequencyBodyGyroscopeMagnitude  
+FrequencyBodyGyroscopeJerkMagnitude  
+
+The set of variables that were selected from these signals are: 
+Mean: Mean value
+STD: Standard deviation
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+
+gravityMean
+TimeBodyAccelerometerMean
+TimeBodyAccelerometerJerkMean
+TimeBodyGyroscopeMean
+TimeBodyGyroscopeJerkMean
+
+The complete list of variables of each feature vector is available in 'features.txt' 
 
