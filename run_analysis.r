@@ -86,7 +86,7 @@ train_set_colnames <- features[,2]
 colnames(train_set, do.NULL = FALSE)
 colnames(train_set) <- train_set_colnames
 str(train_set)
-
+head(train_set)[1:5,1:5]
 # merge the train_subjects, train_label and train_set data by using cbind:
 traindf <- cbind(train_subjects,train_label,train_set)
 
@@ -150,13 +150,13 @@ head(meanstddf)
 meanstddf2 <- left_join(meanstddf,activity_labels, "activity_label")
 
 #check the features of the new meanstddf2 dataframe:
-head(meanstddf2)[5,5]
+head(meanstddf2)[1:5,1:5]
 dim(meanstddf2)
 
 # Replace "activity_label" with the "activity" column 
 # by moving it to the second column, assign dataframe to meanstddf3:
 meanstddf3 <- meanstddf2[c(1, 89, 3:88)]
-head(meanstddf3)[5,5]
+head(meanstddf3)[1:5,1:5]
 dim(meanstddf3)
 
 # 4.Appropriately labels the data set with descriptive variable names.
