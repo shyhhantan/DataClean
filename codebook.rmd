@@ -3,13 +3,10 @@ title: "CodeBook.md"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Getting and Cleaning Data Course Project
 ## Peer-graded Assignment
 
+# Data
 This project assignment uses data downloaded from:https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
 The task of the assignment is to create one R script called run_analysis.R that does the following:  
@@ -57,10 +54,71 @@ recursive_replace_lowercase()
 ```
 
 Get a list of files & directories in the uci_har_dataset directory:
-
 ```{r}
 list.files("./data/uci_har_dataset/")
 ```
+
+# Description of the data
+As described in the features_info.txt file provided for the assignment, the features are from the accelerometer and gyroscope 3-axial raw signals tAccelerometer-XYZ and tGyroscope-XYZ. 
+
+# Units of data
+Data with prefix 't' (to denote time) are time domain signals, captured at a constant rate of 50 Hz, then filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. The acceleration signal was then separated into body and gravity acceleration signals (TimeBodyAccelerometer-XYZ and TimeGravityAccelerometer-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+The body linear acceleration and angular velocity were later derived in time to obtain Jerk signals (TimeBodyAccelerometerJerk-XYZ and TimeBodyGyroscopeJerk-XYZ). The magnitude of these 3-D signals were calculated using the Euclidean norm (TimeBodyAccelerometerMagnitude, TimeGravityAccelerometerMagnitude, TimeBodyAccelerometerJerkMagnitude, TimeBodyGyroscopeMagnitude, TimeBodyGyroscopeJerkMagnitude). 
+
+Data with prefix 'f' are frequency domain signals. AFast Fourier Transform (FFT) was applied to some of these signals to get FrequencyBodyAccelerometer-XYZ, FrequencyBodyAccelerometerJerk-XYZ, FrequencyBodyGyroscope-XYZ, FrequencyBodyAccelerometerJerkMagnitude, FrequencyBodyGyroscopeMagnitude, FrequencyBodyGyroscopeJerkMagnitude.
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+
+TimeBodyAccelerometer-XYZ  
+TimeGravityAccelerometer-XYZ  
+TimeBodyAccelerometerJerk-XYZ  
+TimeBodyGyroscope-XYZ  
+TimeBodyGyroscopeJerk-XYZ  
+TimeBodyAccelerometerMagnitude  
+TimeGravityAccelerometerMagnitude  
+TimeBodyAccelerometerJerkMagnitude  
+TimeBodyGyroscopeMagnitude  
+TimeBodyGyroscopeJerkMagnitude  
+FrequencyBodyAccelerometer-XYZ  
+FrequencyBodyAccelerometerJerk-XYZ  
+FrequencyBodyGyroscope-XYZ  
+FrequencyBodyAccelerometerMagnitude  
+FrequencyBodyAccelerometerJerkMagnitude  
+FrequencyBodyGyroscopeMagnitude  
+FrequencyBodyGyroscopeJerkMagnitude  
+
+The final set of variables that were selected from these signals are: 
+Mean: Mean value
+STD: Standard deviation
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+
+gravityMean
+TimeBodyAccelerometerMean
+TimeBodyAccelerometerJerkMean
+TimeBodyGyroscopeMean
+TimeBodyGyroscopeJerkMean
+
+The complete list of variables of each feature vector is available in 'features.txt' 
+
+# Subjects
+Subjects are numbered from 1 to 30
+
+# Activity Labels
+Tthe experiment monitored via a smartphone the six different activities:
+
+activity_label           activity  
+             1            WALKING  
+             2   WALKING_UPSTAIRS  
+             3 WALKING_DOWNSTAIRS  
+             4            SITTING  
+             5           STANDING  
+             6             LAYING  
+
+
 
 # 1A. Read in the files describing the activity_labels and features.
 
@@ -250,46 +308,4 @@ Create the tidy data set as a csv file
 write.table(mean_activity, "mean_activity.txt",row.name=FALSE)
 ```
 
-# Description of the variables
-
-As described in the features_info.txt file provided for the assignment, the features are from the accelerometer and gyroscope 3-axial raw signals tAccelerometer-XYZ and tGyroscope-XYZ. They are time domain signals (prefix 't' to denote time) captured at a constant rate of 50 Hz, then filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. The acceleration signal was then separated into body and gravity acceleration signals (TimeBodyAccelerometer-XYZ and TimeGravityAccelerometer-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
-
-The body linear acceleration and angular velocity were later derived in time to obtain Jerk signals (TimeBodyAccelerometerJerk-XYZ and TimeBodyGyroscopeJerk-XYZ). The magnitude of these 3-D signals were calculated using the Euclidean norm (TimeBodyAccelerometerMagnitude, TimeGravityAccelerometerMagnitude, TimeBodyAccelerometerJerkMagnitude, TimeBodyGyroscopeMagnitude, TimeBodyGyroscopeJerkMagnitude). 
-
-Finally a Fast Fourier Transform (FFT) was applied to some of these signals to get FrequencyBodyAccelerometer-XYZ, FrequencyBodyAccelerometerJerk-XYZ, FrequencyBodyGyroscope-XYZ, FrequencyBodyAccelerometerJerkMagnitude, FrequencyBodyGyroscopeMagnitude, FrequencyBodyGyroscopeJerkMagnitude. (Note: the 'f' indicates frequency domain signals). 
-
-These signals were used to estimate variables of the feature vector for each pattern:  
-'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
-
-TimeBodyAccelerometer-XYZ  
-TimeGravityAccelerometer-XYZ  
-TimeBodyAccelerometerJerk-XYZ  
-TimeBodyGyroscope-XYZ  
-TimeBodyGyroscopeJerk-XYZ  
-TimeBodyAccelerometerMagnitude  
-TimeGravityAccelerometerMagnitude  
-TimeBodyAccelerometerJerkMagnitude  
-TimeBodyGyroscopeMagnitude  
-TimeBodyGyroscopeJerkMagnitude  
-FrequencyBodyAccelerometer-XYZ  
-FrequencyBodyAccelerometerJerk-XYZ  
-FrequencyBodyGyroscope-XYZ  
-FrequencyBodyAccelerometerMagnitude  
-FrequencyBodyAccelerometerJerkMagnitude  
-FrequencyBodyGyroscopeMagnitude  
-FrequencyBodyGyroscopeJerkMagnitude  
-
-The set of variables that were selected from these signals are: 
-Mean: Mean value
-STD: Standard deviation
-
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
-
-gravityMean
-TimeBodyAccelerometerMean
-TimeBodyAccelerometerJerkMean
-TimeBodyGyroscopeMean
-TimeBodyGyroscopeJerkMean
-
-The complete list of variables of each feature vector is available in 'features.txt' 
 
